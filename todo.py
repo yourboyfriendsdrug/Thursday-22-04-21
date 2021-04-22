@@ -17,7 +17,11 @@ print ( "Привет! Введи команду help для вывода спи
 while True:
   userAnswer = input("Введите команду\n") #\n - ввод каждой команды с новой строки
   if userAnswer == "add":
-    print ( "Работает" ) 
+    userDate = input( "Введите дату:\n" )
+    userTask = input( "Что нужно сделать?\n" )
+
+    todo[ userDate ] = userTask
+    print ( f"На {userDate} число добавлена задача '{userTask}'" ) 
   elif userAnswer == "help":
     print ( "Работает" ) 
   elif userAnswer == "show":
@@ -26,6 +30,7 @@ while True:
     print ( "Работает" ) 
   elif userAnswer == "exit":
     print ( "Работает" )
+    break
   else:
     print ( "Error, нет такой команды!" )
     print ( "Введите help для вывода списка команд" )
