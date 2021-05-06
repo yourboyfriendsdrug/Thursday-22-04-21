@@ -7,6 +7,7 @@ command = 0
 #0 - пользователь ничего не выбрал
 #1 - ожидаем дату для добавления задачи
 #2 - ожидаем задачу для добавления в словарь
+#3 - ожидаем вариант отображения задач
 
 userDate, userTask = 0, 0  #глобальные переменные
 
@@ -19,6 +20,7 @@ async def checkDate(date, message):
     await message.answer(text="Неправильный формат даты")
     command = 0
 
+  
 async def send_to_admin(dp):
   await bot.send_message(chat_id=admin_id, text="Бот запущен")
 
@@ -42,14 +44,17 @@ async def send_to_admin(dp):
 
   @dp.message_handler(commands = "show")
   async def show(message: Message):
-    await message.answer(text="Работает")
+    global command
+    await message.answer(text="[ 0 ] - вывести все задачи\n[ 1 ] - вывести задачи по определенной дате")
+    command = 3
 
   @dp.message_handler(commands = "start")
   async def inputText(message: Message):
     global userDate, userTask, command, todo 
     if command == 1:
       #проверка корректности ввода
-
+      if checkDate(userDate, message) == False:
+        return #функция прекращается
       #запрос - что нужно сделать
       userDate = message.text #то, что ввел пользователь
       await message.answer("Введите, что нужно сделать")
@@ -62,3 +67,10 @@ async def send_to_admin(dp):
         todo[userDate]=[userTask]
       await message.answer(f"Добавлена '{userTask}' на {userDate} ")
       command = 0
+    elif command == 3:
+      if message.text == "0":
+        #сортируем ключи и проходимя по ним циклом
+        for date in sorted(todo.keys()):
+          #получаем список задач и выводим каждую задачу на новой строке
+          for task in todo [date]:
+            await message.answer(text = f"[{date} - '{task}']")
