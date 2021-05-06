@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "repl_python3_Thursday-22-04-1"
+version = "0.1.0"
+description = ""
+authors = ["sonia228 <<>>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+aiogram = "^2.13"
+config = "^0.5.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
